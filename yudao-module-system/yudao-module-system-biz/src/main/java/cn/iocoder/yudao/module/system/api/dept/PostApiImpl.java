@@ -1,6 +1,9 @@
 package cn.iocoder.yudao.module.system.api.dept;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.system.api.dept.dto.PostReqDTO;
+import cn.iocoder.yudao.module.system.api.dept.dto.PostRespDTO;
+import cn.iocoder.yudao.module.system.convert.dept.PostConvert;
 import cn.iocoder.yudao.module.system.service.dept.PostService;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
@@ -27,4 +30,8 @@ public class PostApiImpl implements PostApi {
         return success(true);
     }
 
+    @Override
+    public CommonResult<PostRespDTO> getPost(PostReqDTO reqDTO) {
+        return success(PostConvert.INSTANCE.convert0(postService.getPost(reqDTO.getPostId())));
+    }
 }

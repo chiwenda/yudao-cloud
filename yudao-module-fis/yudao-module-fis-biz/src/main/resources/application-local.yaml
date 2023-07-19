@@ -127,3 +127,10 @@ yudao:
   error-code: # 错误码相关配置项
     enable: true
   demo: false # 关闭演示模式
+  fis:
+    oss:
+      store:
+        path:
+          problem:
+            answer: problem/answer
+            issue: problem/issue

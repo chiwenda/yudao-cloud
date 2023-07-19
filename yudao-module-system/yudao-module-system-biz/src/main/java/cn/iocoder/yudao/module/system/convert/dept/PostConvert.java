@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.system.convert.dept;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.module.system.api.dept.dto.PostRespDTO;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.post.*;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.PostDO;
 import org.mapstruct.Mapper;
@@ -22,6 +23,8 @@ public interface PostConvert {
     PostDO convert(PostCreateReqVO bean);
 
     PostDO convert(PostUpdateReqVO reqVO);
+
+    PostRespDTO convert0(PostDO id);
 
     List<PostExcelVO> convertList03(List<PostDO> list);
 

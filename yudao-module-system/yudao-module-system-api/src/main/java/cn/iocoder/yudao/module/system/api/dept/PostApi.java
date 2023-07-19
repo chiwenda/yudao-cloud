@@ -1,12 +1,16 @@
 package cn.iocoder.yudao.module.system.api.dept;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.system.api.dept.dto.PostReqDTO;
+import cn.iocoder.yudao.module.system.api.dept.dto.PostRespDTO;
 import cn.iocoder.yudao.module.system.enums.ApiConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
@@ -22,4 +26,8 @@ public interface PostApi {
     @Parameter(name = "ids", description = "岗位编号数组", example = "1,2", required = true)
     CommonResult<Boolean> validPostList(@RequestParam("ids") Collection<Long> ids);
 
+    @PostMapping(PREFIX + "/get-post-by-id")
+    @Operation(summary = "查询指定ID的岗位")
+    @Parameter(name = "postId", description = "岗位编号ID", example = "2", required = true)
+    CommonResult<PostRespDTO> getPost(@RequestBody PostReqDTO reqDTO);
 }

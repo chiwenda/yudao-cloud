@@ -42,7 +42,7 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
 
     @Resource
     private SystemService systemService;
-    @Value("${fis.oss.store.path.problem.answer}")
+    @Value("${yudao.fis.oss.store.path.problem.answer}")
     private String path;
 
     @Resource

@@ -1,22 +1,19 @@
 package cn.iocoder.yudao.module.fis.controller.admin.problem;
 
 import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.http.HttpUtil;
-import com.catl.fis.framework.common.pojo.CommonResult;
-import com.catl.fis.module.pc.controller.admin.problem.vo.ProblemInfoRespVO;
-import com.catl.fis.module.pc.controller.admin.problem.vo.ProblemReportReqVO;
-import com.catl.fis.module.pc.controller.admin.problem.vo.ProblemReportRespVO;
-import com.catl.fis.module.pc.convert.problem.ProblemInfoConvert;
-import com.catl.fis.module.pc.dal.dataobject.problem.ProblemAnswerDO;
-import com.catl.fis.module.pc.dal.dataobject.problem.ProblemInfoDO;
-import com.catl.fis.module.pc.service.problem.ProblemService;
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemReportReqVO;
+import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemReportRespVO;
+import cn.iocoder.yudao.module.fis.service.problem.ProblemService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -26,9 +23,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static com.catl.fis.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.catl.fis.framework.common.pojo.CommonResult.success;
-import static com.catl.fis.module.pc.enums.ErrorCodeConstants.FILE_DOWNLOAD_ERROR;
+import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
+import static cn.iocoder.yudao.module.fis.enums.ErrorCodeConstants.FILE_DOWNLOAD_ERROR;
 
 @Tag(name = "管理后台 - 问题")
 @RestController

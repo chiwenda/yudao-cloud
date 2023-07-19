@@ -47,7 +47,7 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
     @Resource
     private SystemService systemService;
 
-    @Value("${fis.oss.store.path.problem.issue}")
+    @Value("${yudao.fis.oss.store.path.problem.issue}")
     private String path;
 
     @Resource
