@@ -1,0 +1,135 @@
+version : '3.3'
+services:
+  rmqnamesrv:
+    image: apache/rocketmq:5.1.3
+    container_name: rmqnamesrv
+    ports:
+      - 9876:9876
+    networks:
+      - fis
+    restart: always
+    privileged: true
+    volumes:
+      - /home/docker/rocketmq/server/logs:/home/rocketmq/logs
+    environment:
+      - MAX_HEAP_SIZE=256M
+      - HEAP_NEWSIZE=128M
+    command: [ "sh","mqnamesrv" ]
+  rmqbroker:
+    image: apache/rocketmq:5.1.3
+    container_name: rmqbroker
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    networks:
+      - fis
+    restart: always
+    privileged: true
+    volumes:
+      - /home/docker/rocketmq/broker/logs:/home/rocketmq/logs
+    environment:
+      - NAMESRV_ADDR=rmqnamesrv:9876
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=256M
+    command: [ "sh","mqbroker","-c","/home/rocketmq/rocketmq-5.1.3/conf/broker.conf","autoCreateTopicEnable=true" ]
+    depends_on:
+      - rmqnamesrv
+  rmqdashboard:
+    image: apacherocketmq/rocketmq-dashboard:latest
+    container_name: rocketmq-dashboard
+    ports:
+      - 8080:8080
+    networks:
+      - fis
+    restart: always
+    privileged: true
+    environment:
+      JAVA_OPTS: "-Drocketmq.namesrv.addr=namesrv:9876"
+    depends_on:
+      - rmqnamesrv
+  fis-nacos:
+    container_name: project-nacos
+    image: nacos/nacos-server
+    build:
+      context: ./nacos
+    environment:
+      - MODE=standalone
+    volumes:
+      - ./nacos/logs/:/home/nacos/logs
+      - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    restart: always
+    privileged: true
+    networks:
+      - fis
+  fis-gateway:
+    container_name: project-gateway
+    build:
+      context: project/gateway
+      dockerfile: dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    ports:
+      - "48080:48080"
+    restart: always
+    privileged: true
+    networks:
+      - fis
+    depends_on:
+      - fis-nacos
+  fis-module-system-biz:
+    container_name: project-module-system-biz
+    build:
+      context: project/modules/system
+      dockerfile: dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    ports:
+      - "48081:48081"
+    restart: always
+    privileged: true
+    networks:
+      - fis
+    depends_on:
+      - fis-nacos
+      - rmqnamesrv
+  fis-module-pc-biz:
+    container_name: project-module-pc-biz
+    build:
+      context: project/modules/pc
+      dockerfile: dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    ports:
+      - "48083:48083"
+    restart: always
+    privileged: true
+    networks:
+      - fis
+    depends_on:
+      - fis-nacos
+      - rmqnamesrv
+  fis-module-infra-biz:
+    container_name: project-module-infra-biz
+    build:
+      context: project/modules/infra
+      dockerfile: dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    ports:
+      - "48082:48082"
+    restart: always
+    privileged: true
+    networks:
+      - fis
+    depends_on:
+      - fis-nacos
+      - rmqnamesrv
+      - fis-module-system-biz
+networks:
+  fis:
+    external: true

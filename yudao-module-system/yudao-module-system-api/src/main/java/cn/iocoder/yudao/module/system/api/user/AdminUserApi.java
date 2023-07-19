@@ -57,4 +57,9 @@ public interface AdminUserApi {
     @Parameter(name = "ids", description = "用户编号数组", example = "3,5", required = true)
     CommonResult<Boolean> validUserList(@RequestParam("ids") Set<Long> ids);
 
+    @GetMapping(PREFIX + "/get-users-by-postIds")
+    @Operation(summary = "获得指定岗位id的用户")
+    @Parameter(name = "id", description = "岗位ID", example = "1", required = true)
+    CommonResult<List<AdminUserRespDTO>> getUsersByPostIds(@RequestParam("postIds") Collection<Long> postIds);
+
 }

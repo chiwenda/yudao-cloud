@@ -56,4 +56,10 @@ public class AdminUserApiImpl implements AdminUserApi {
         return success(true);
     }
 
+    @Override
+    public CommonResult<List<AdminUserRespDTO>> getUsersByPostIds(Collection<Long> postIds) {
+        List<AdminUserDO> users = userService.getUserListByPostIds(postIds);
+        return success(UserConvert.INSTANCE.convertList4(users));
+    }
+
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.iocoder.cloud</groupId>
+        <artifactId>yudao</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <name>${project.artifactId}</name>
+    <modules>
+        <module>yudao-module-fis-biz</module>
+        <module>yudao-module-fis-api</module>
+    </modules>
+    <packaging>pom</packaging>
+    <artifactId>yudao-module-fis</artifactId>
+    <description>fis后台业务</description>
+
+
+</project>
