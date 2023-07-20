@@ -133,7 +133,7 @@ yudao:
     constants-class-list:
       - cn.iocoder.yudao.module.infra.enums.ErrorCodeConstants
   tenant: # 多租户相关配置项
-    enable: true
+    enable: false
     ignore-urls:
       - /admin-api/infra/file/*/get/** # 获取图片，和租户无关
     ignore-tables:

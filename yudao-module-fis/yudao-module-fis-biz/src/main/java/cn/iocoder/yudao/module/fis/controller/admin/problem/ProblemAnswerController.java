@@ -30,7 +30,7 @@ import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.E
 
 @Tag(name = "管理后台 - 问题回答")
 @RestController
-@RequestMapping("/pc/problem-answer")
+@RequestMapping("/fis/problem-answer")
 @Validated
 public class ProblemAnswerController {
 

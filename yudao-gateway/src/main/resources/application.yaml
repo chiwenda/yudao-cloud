@@ -51,10 +51,10 @@ spring:
           uri: grayLb://report-server
           predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
             - Path=/jmreport/**
-        - id: pc-admin-api # 路由的编号 移动端
-          uri: grayLb://pc-server
+        - id: fis-admin-api # 路由的编号 移动端
+          uri: grayLb://fis-server
           predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
-            - Path=/admin-api/pc/**
+            - Path=/admin-api/fis/**
           filters:
             - RewritePath=/admin-api/fis/v3/api-docs, /v3/api-docs
       x-forwarded:

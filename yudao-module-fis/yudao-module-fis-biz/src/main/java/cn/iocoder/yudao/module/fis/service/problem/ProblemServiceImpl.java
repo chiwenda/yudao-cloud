@@ -3,10 +3,16 @@ package cn.iocoder.yudao.module.fis.service.problem;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.iocoder.yudao.framework.common.core.KeyValue;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.FilePageReqVO;
+import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.FileRespVO;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemReportReqVO;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemReportRespVO;
+import cn.iocoder.yudao.module.fis.convert.problem.ProblemConvert;
 import cn.iocoder.yudao.module.fis.dal.mysql.problem.ProblemMapper;
 import cn.iocoder.yudao.module.fis.enums.PcConstants;
+import cn.iocoder.yudao.module.infra.api.file.FileApi;
+import cn.iocoder.yudao.module.infra.api.file.dto.FileRespDTO;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,6 +38,9 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Resource
     private SystemService systemService;
+
+    @Resource
+    private FileApi fileApi;
 
 
     @Override
@@ -171,6 +180,7 @@ public class ProblemServiceImpl implements ProblemService {
         return result;
     }
 
+
     private static void getTimeDimension(ProblemReportReqVO reqVO, List<ProblemReportRespVO> result, ProblemReportRespVO p,
                                          List<ProblemReportRespVO> times, List<KeyValue<String, Long>> kvs) {
         //日期维度 遍历时间为key的map
@@ -298,5 +308,21 @@ public class ProblemServiceImpl implements ProblemService {
         }
     }
 
+    @Override
+    public PageResult<FileRespVO> getFilePage(FilePageReqVO pageVO) {
+        //查询我的文件
+        if (pageVO.getMe()) {
+            Long userId = systemService.getLoginUser().getId();
+            pageVO.setCreator(userId.toString());
+            PageResult<FileRespDTO> pageResult = fileApi.getFilePage(ProblemConvert.INSTANCE.convert(pageVO)).getCheckedData();
+            return ProblemConvert.INSTANCE.convertPage(pageResult);
+        }
+        PageResult<FileRespDTO> pageResult = fileApi.getFilePage(ProblemConvert.INSTANCE.convert(pageVO)).getCheckedData();
+        return ProblemConvert.INSTANCE.convertPage(pageResult);
+    }
 
+    @Override
+    public Boolean deleteFile(Long id) {
+        return fileApi.delete(id).getCheckedData();
+    }
 }
