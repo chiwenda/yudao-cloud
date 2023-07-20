@@ -12,7 +12,7 @@ public interface ErrorCodeConstants {
     // ========== 问题管理模块 1002003000 ==========
     ErrorCode PROBLEM_USER_NOT_EXISTS = new ErrorCode(1003000000, "指定用户不存在");
     ErrorCode PROBLEM_ANSWER_NOT_EXISTS = new ErrorCode(1003000001, "问题回答不存在");
-    ErrorCode PROBLEM_INFO_NOT_EXISTS = new ErrorCode(1003000002, "问题明细不存在");
+    ErrorCode PROBLEM_INFO_NOT_EXISTS = new ErrorCode(1003000002, "问题不存在或已被删除");
     ErrorCode FILE_UPLOAD_ERROR = new ErrorCode(1003000003, "文件上传失败:{}");
     ErrorCode FILE_DOWNLOAD_ERROR = new ErrorCode(1003000004, "文件下载失败");
     ErrorCode PROBLEM_ALREADY_ANSWER = new ErrorCode(1003000005, "问题已回答");

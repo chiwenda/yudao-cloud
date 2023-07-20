@@ -49,7 +49,7 @@ public class ProblemInfoDO extends BaseDO {
     /**
      * 问题附件ID
      */
-    private String problemFileId;
+    private Long problemFileId;
     /**
      * 问题附件
      */

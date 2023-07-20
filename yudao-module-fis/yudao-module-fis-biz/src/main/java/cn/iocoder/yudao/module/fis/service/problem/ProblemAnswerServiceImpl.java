@@ -73,10 +73,13 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
                     throw exception(FILE_CONTENT_NULL);
                 }
                 String answerCode = LocalDateTimeUtil.format(LocalDateTimeUtil.now(), "yyyyMMddHHmmss");
+                String fileName = String.format("%s-%s-%s", "answer", answerCode, file.getOriginalFilename());
                 String path = String.format("%s/%s"
                         , String.format("%s/%s", this.path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
-                        , String.format("%s-%s", answerCode, file.getOriginalFilename()));
-                FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO().setName(file.getOriginalFilename()).setPath(path).setContent(bytes)).getCheckedData();
+                        , fileName);
+                FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO()
+                        .setName(fileName)
+                        .setPath(path).setContent(bytes)).getCheckedData();
                 createReqVO.setAnswerAttached(fileResp.getUrl());
                 createReqVO.setAnswerFileId(fileResp.getId());
             } catch (Exception e) {

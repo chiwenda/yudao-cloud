@@ -68,10 +68,13 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
                 if (bytes.length == 0) {
                     throw exception(FILE_CONTENT_NULL);
                 }
+                String fileName = String.format("%s-%s-%s", "problem", problemCode, file.getOriginalFilename());
                 String path = String.format("%s/%s"
                         , String.format("%s/%s", this.path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
-                        , String.format("%s-%s", problemCode, file.getOriginalFilename()));
-                FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO().setName(file.getOriginalFilename()).setPath(path).setContent(bytes)).getCheckedData();
+                        , fileName);
+                FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO()
+                        .setName(fileName)
+                        .setPath(path).setContent(bytes)).getCheckedData();
                 createReqVO.setProblemAttached(fileResp.getUrl());
                 createReqVO.setProblemFileId(fileResp.getId());
             } catch (Exception e) {
@@ -107,9 +110,12 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
         validateProblemInfoExists(id);
         //删除问题的所有回答
 //        problemAnswerService.deleteAnswersByProblemId(id);
+        //删除附件
+        Long fileId = problemInfoMapper.selectById(id).getProblemFileId();
+        fileApi.delete(fileId);
         // 删除
         problemInfoMapper.deleteById(id);
-        //删除附件
+
     }
 
     private void validateProblemInfoExists(Long id) {
@@ -120,7 +126,11 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
 
     @Override
     public ProblemInfoDO getProblemInfo(Long id) {
-        return problemInfoMapper.selectById(id);
+        ProblemInfoDO problem = problemInfoMapper.selectById(id);
+        if (problem == null) {
+            throw exception(PROBLEM_INFO_NOT_EXISTS);
+        }
+        return problem;
     }
 
     @Override
