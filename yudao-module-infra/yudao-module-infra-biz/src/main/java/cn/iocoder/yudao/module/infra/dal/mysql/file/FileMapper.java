@@ -18,6 +18,7 @@ public interface FileMapper extends BaseMapperX<FileDO> {
     default PageResult<FileDO> selectPage(FilePageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<FileDO>()
                 .likeIfPresent(FileDO::getPath, reqVO.getPath())
+                .likeIfPresent(FileDO::getName, reqVO.getName())
                 .likeIfPresent(FileDO::getType, reqVO.getType())
                 .likeIfPresent(FileDO::getCreator, reqVO.getCreator())
                 .betweenIfPresent(FileDO::getCreateTime, reqVO.getCreateTime())

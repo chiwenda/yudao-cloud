@@ -39,7 +39,7 @@ public class ProblemAnswerController {
 
     @PostMapping("/create")
     @Operation(summary = "创建问题回答")
-    @PreAuthorize("@ss.hasPermission('pc:problem-answer:create')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-answer:create')")
     public CommonResult<Long> createProblemAnswer(@RequestPart(value = "attached", required = false) MultipartFile file,
                                                   @Valid @RequestPart("content") ProblemAnswerCreateReqVO createReqVO) {
         return success(problemAnswerService.createProblemAnswer(file, createReqVO));
@@ -47,7 +47,7 @@ public class ProblemAnswerController {
 
     @PutMapping("/update")
     @Operation(summary = "更新问题回答")
-    @PreAuthorize("@ss.hasPermission('pc:problem-answer:update')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-answer:update')")
     public CommonResult<Boolean> updateProblemAnswer(@Valid @RequestBody ProblemAnswerUpdateReqVO updateReqVO) {
         problemAnswerService.updateProblemAnswer(updateReqVO);
         return success(true);
@@ -56,7 +56,7 @@ public class ProblemAnswerController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除问题回答")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('pc:problem-answer:delete')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-answer:delete')")
     public CommonResult<Boolean> deleteProblemAnswer(@RequestParam("id") Long id) {
         problemAnswerService.deleteProblemAnswer(id);
         return success(true);
@@ -65,7 +65,7 @@ public class ProblemAnswerController {
     @GetMapping("/get")
     @Operation(summary = "获得问题回答")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('pc:problem-answer:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-answer:query')")
     public CommonResult<ProblemAnswerRespVO> getProblemAnswer(@RequestParam("id") Long id) {
         ProblemAnswerDO problemAnswer = problemAnswerService.getProblemAnswer(id);
         return success(ProblemAnswerConvert.INSTANCE.convert(problemAnswer));
@@ -74,7 +74,7 @@ public class ProblemAnswerController {
     @GetMapping("/list")
     @Operation(summary = "获得问题回答列表")
     @Parameter(name = "ids", description = "编号列表", required = true, example = "1024,2048")
-    @PreAuthorize("@ss.hasPermission('pc:problem-answer:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-answer:query')")
     public CommonResult<List<ProblemAnswerRespVO>> getProblemAnswerList(@RequestParam("ids") Collection<Long> ids) {
         List<ProblemAnswerDO> list = problemAnswerService.getProblemAnswerList(ids);
         return success(ProblemAnswerConvert.INSTANCE.convertList(list));
@@ -82,7 +82,7 @@ public class ProblemAnswerController {
 
     @GetMapping("/page")
     @Operation(summary = "获得问题回答分页")
-    @PreAuthorize("@ss.hasPermission('pc:problem-answer:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-answer:query')")
     public CommonResult<PageResult<ProblemAnswerRespVO>> getProblemAnswerPage(@Valid ProblemAnswerPageReqVO pageVO) {
         PageResult<ProblemAnswerDO> pageResult = problemAnswerService.getProblemAnswerPage(pageVO);
         return success(ProblemAnswerConvert.INSTANCE.convertPage(pageResult));
@@ -90,7 +90,7 @@ public class ProblemAnswerController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出问题回答 Excel")
-    @PreAuthorize("@ss.hasPermission('pc:problem-answer:export')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-answer:export')")
     @OperateLog(type = EXPORT)
     public void exportProblemAnswerExcel(@Valid ProblemAnswerExportReqVO exportReqVO,
                                          HttpServletResponse response) throws IOException {

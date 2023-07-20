@@ -49,7 +49,7 @@ public class ProblemController {
 
     @GetMapping("/file/page")
     @Operation(summary = "获得文件分页")
-    @PreAuthorize("@ss.hasPermission('pc:problem-file:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-file:query')")
     public CommonResult<PageResult<FileRespVO>> getFilePage(@Valid FilePageReqVO pageVO) {
         return success(problemService.getFilePage(pageVO));
     }
@@ -57,14 +57,14 @@ public class ProblemController {
     @DeleteMapping("/file/delete")
     @Operation(summary = "删除文件")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('pc:problem-file:delete')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-file:delete')")
     public CommonResult<Boolean> deleteFile(@RequestParam("id") Long id) throws Exception {
         return success(problemService.deleteFile(id));
     }
 
 
     @GetMapping("/download-attached")
-    @PreAuthorize("@ss.hasPermission('pc:problem-info:download')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-info:download')")
     @Operation(summary = "下载附件")
     public void download(HttpServletResponse response, @RequestParam("path") String path) {
         ServletOutputStream outputStream = null;

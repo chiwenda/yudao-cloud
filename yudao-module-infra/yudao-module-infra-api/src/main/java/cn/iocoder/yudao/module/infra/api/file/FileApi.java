@@ -59,6 +59,10 @@ public interface FileApi {
     @Operation(summary = "保存文件，并返回文件的访问路径")
     CommonResult<String> createFile(@Valid @RequestBody FileCreateReqDTO createReqDTO);
 
+    @PostMapping(PREFIX + "/createResp")
+    @Operation(summary = "保存文件，并返回文件的访问路径")
+    CommonResult<FileRespDTO> createResp(@Valid @RequestBody FileCreateReqDTO createReqDTO);
+
     @GetMapping(PREFIX + "/page")
     @Operation(summary = "查询文件分页")
     CommonResult<PageResult<FileRespDTO>> getFilePage(@Valid @SpringQueryMap FilePageReqDTO pageVO);

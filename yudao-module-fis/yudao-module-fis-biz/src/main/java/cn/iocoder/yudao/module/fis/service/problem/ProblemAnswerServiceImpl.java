@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.fis.service.problem;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.io.file.FileNameUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemAnswerCreateReqVO;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemAnswerExportReqVO;
@@ -10,6 +11,8 @@ import cn.iocoder.yudao.module.fis.convert.problem.ProblemAnswerConvert;
 import cn.iocoder.yudao.module.fis.dal.dataobject.problem.ProblemAnswerDO;
 import cn.iocoder.yudao.module.fis.dal.mysql.problem.ProblemAnswerMapper;
 import cn.iocoder.yudao.module.infra.api.file.FileApi;
+import cn.iocoder.yudao.module.infra.api.file.dto.FileCreateReqDTO;
+import cn.iocoder.yudao.module.infra.api.file.dto.FileRespDTO;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,9 +72,13 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
                 if (bytes.length == 0) {
                     throw exception(FILE_CONTENT_NULL);
                 }
-                createReqVO.setAnswerAttached(fileApi.createFile(String.format("%s/%s"
-                        , String.format("%s/%s", path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
-                        , file.getOriginalFilename()), bytes));
+                String answerCode = LocalDateTimeUtil.format(LocalDateTimeUtil.now(), "yyyyMMddHHmmss");
+                String path = String.format("%s/%s"
+                        , String.format("%s/%s", this.path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
+                        , String.format("%s-%s", answerCode, file.getOriginalFilename()));
+                FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO().setName(file.getOriginalFilename()).setPath(path).setContent(bytes)).getCheckedData();
+                createReqVO.setAnswerAttached(fileResp.getUrl());
+                createReqVO.setAnswerFileId(fileResp.getId());
             } catch (Exception e) {
                 throw exception(FILE_UPLOAD_ERROR, e.getMessage());
             }

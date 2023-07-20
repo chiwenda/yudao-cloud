@@ -18,6 +18,8 @@ public interface FileConvert {
 
     FilePageReqVO convert(FilePageReqDTO bean);
 
+    FileRespDTO convert0(FileDO bean);
+
     PageResult<FileRespVO> convertPage(PageResult<FileDO> page);
     PageResult<FileRespDTO> convertPage0(PageResult<FileDO> page);
 

@@ -82,7 +82,7 @@ public class ProblemInfoController {
     @PostMapping("/getUsersByPostIds")
     @Operation(summary = "获岗位匹配的用户")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('pc:problem-info:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-info:query')")
     public CommonResult<List<ProblemUserPostRespVO>> getUsersByPostId(@RequestBody ProblemPostReqVO reqVO) {
         return success(problemInfoService.getUsersByPostId(reqVO.getIds()));
     }
@@ -90,7 +90,7 @@ public class ProblemInfoController {
     @GetMapping("/list")
     @Operation(summary = "获得问题信息列表")
     @Parameter(name = "ids", description = "编号列表", required = true, example = "1024,2048")
-    @PreAuthorize("@ss.hasPermission('pc:problem-info:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-info:query')")
     public CommonResult<List<ProblemInfoRespVO>> getProblemInfoList(@RequestParam("ids") Collection<Long> ids) {
         List<ProblemInfoDO> list = problemInfoService.getProblemInfoList(ids);
         return success(ProblemInfoConvert.INSTANCE.convertList(list));
@@ -98,7 +98,7 @@ public class ProblemInfoController {
 
     @GetMapping("/page")
     @Operation(summary = "获得问题信息分页(只显示指派给我的问题)")
-    @PreAuthorize("@ss.hasPermission('pc:problem-info:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-info:query')")
     public CommonResult<PageResult<ProblemInfoRespVO>> getProblemInfoPage(@Valid ProblemInfoPageReqVO pageVO) {
         PageResult<ProblemInfoDO> pageResult = problemInfoService.getProblemInfoPage(pageVO);
         PageResult<ProblemInfoRespVO> result = ProblemInfoConvert.INSTANCE.convertPage(pageResult);
@@ -109,7 +109,7 @@ public class ProblemInfoController {
 
     @GetMapping("/issue-page")
     @Operation(summary = "获得问题信息分页(只显示我提问的问题)")
-    @PreAuthorize("@ss.hasPermission('pc:problem-info:query')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-info:query')")
     public CommonResult<PageResult<ProblemInfoRespVO>> getProblemInfoPageForIssue(@Valid ProblemInfoPageReqVO pageVO) {
         PageResult<ProblemInfoDO> pageResult = problemInfoService.getProblemInfoPageForIssue(pageVO);
         return success(ProblemInfoConvert.INSTANCE.convertPage(pageResult));
@@ -117,7 +117,7 @@ public class ProblemInfoController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出问题信息 Excel")
-    @PreAuthorize("@ss.hasPermission('pc:problem-info:export')")
+    @PreAuthorize("@ss.hasPermission('fis:problem-info:export')")
     @OperateLog(type = EXPORT)
     public void exportProblemInfoExcel(@Valid ProblemInfoExportReqVO exportReqVO,
                                        HttpServletResponse response) throws IOException {

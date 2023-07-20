@@ -31,6 +31,9 @@ public class ProblemInfoBaseVO {
     @NotNull(message = "问题描述不能为空")
     private String problemDescribe;
 
+    @Schema(description = "问题文件ID")
+    private Long problemFileId;
+
     @Schema(description = "问题附件")
     private String problemAttached;
 

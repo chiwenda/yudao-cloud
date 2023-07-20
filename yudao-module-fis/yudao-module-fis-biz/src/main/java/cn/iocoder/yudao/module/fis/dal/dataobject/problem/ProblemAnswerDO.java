@@ -49,6 +49,10 @@ public class ProblemAnswerDO extends BaseDO {
      */
     private String answerContent;
     /**
+     * 回答文件ID
+     */
+    private Long answerFileId;
+    /**
      * 回答附件
      */
     private String answerAttached;

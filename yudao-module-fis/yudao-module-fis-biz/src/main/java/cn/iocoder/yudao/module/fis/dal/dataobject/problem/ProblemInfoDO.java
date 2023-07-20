@@ -47,6 +47,10 @@ public class ProblemInfoDO extends BaseDO {
      */
     private String problemDescribe;
     /**
+     * 问题附件ID
+     */
+    private String problemFileId;
+    /**
      * 问题附件
      */
     private String problemAttached;

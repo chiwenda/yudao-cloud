@@ -30,6 +30,16 @@ public interface FileService {
     String createFile(String name, String path, byte[] content);
 
     /**
+     * 保存文件，并返回文件的访问路径
+     *
+     * @param name 原文件名称
+     * @param path 文件路径
+     * @param content 文件内容
+     * @return 文件ID
+     */
+    FileDO createFileAndGetId(String name, String path, byte[] content);
+
+    /**
      * 删除文件
      *
      * @param id 编号

@@ -21,6 +21,10 @@ public class FilePageReqVO extends PageParam {
     @Schema(description = "创建人", example = "1")
     private String creator;
 
+    @Schema(description = "文件名称", example = "yudao")
+    private String name;
+
+
     @Schema(description = "文件路径,模糊匹配", example = "yudao")
     private String path;
 

@@ -7,6 +7,8 @@ import cn.iocoder.yudao.module.fis.convert.problem.ProblemInfoConvert;
 import cn.iocoder.yudao.module.fis.dal.dataobject.problem.ProblemInfoDO;
 import cn.iocoder.yudao.module.fis.dal.mysql.problem.ProblemInfoMapper;
 import cn.iocoder.yudao.module.infra.api.file.FileApi;
+import cn.iocoder.yudao.module.infra.api.file.dto.FileCreateReqDTO;
+import cn.iocoder.yudao.module.infra.api.file.dto.FileRespDTO;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
@@ -57,7 +59,7 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
     @DSTransactional
     @Override
     public Long createProblemInfo(MultipartFile file, ProblemInfoCreateReqVO createReqVO) {
-
+        String problemCode = LocalDateTimeUtil.format(LocalDateTimeUtil.now(), "yyyyMMddHHmmss");
         //有附件 上传
         if (null != file) {
             //上传文件到阿里云OSS
@@ -66,9 +68,12 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
                 if (bytes.length == 0) {
                     throw exception(FILE_CONTENT_NULL);
                 }
-                createReqVO.setProblemAttached(fileApi.createFile(String.format("%s/%s"
-                        , String.format("%s/%s", path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
-                        , file.getOriginalFilename()), bytes));
+                String path = String.format("%s/%s"
+                        , String.format("%s/%s", this.path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
+                        , String.format("%s-%s", problemCode, file.getOriginalFilename()));
+                FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO().setName(file.getOriginalFilename()).setPath(path).setContent(bytes)).getCheckedData();
+                createReqVO.setProblemAttached(fileResp.getUrl());
+                createReqVO.setProblemFileId(fileResp.getId());
             } catch (Exception e) {
                 throw exception(FILE_UPLOAD_ERROR, e.getMessage());
             }
@@ -76,7 +81,7 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
         }
         //用户信息
         AdminUserRespDTO user = systemService.getLoginUser();
-        createReqVO.setDetailId(LocalDateTimeUtil.format(LocalDateTimeUtil.now(), "yyyyMMddHHmmss"));
+        createReqVO.setDetailId(problemCode);
         createReqVO.setPubWorkId(user.getUsername());
         createReqVO.setPubUserName(user.getNickname());
         // 插入
@@ -95,14 +100,16 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
         problemInfoMapper.updateById(updateObj);
     }
 
+    @DSTransactional
     @Override
     public void deleteProblemInfo(Long id) {
         // 校验存在
         validateProblemInfoExists(id);
         //删除问题的所有回答
-        problemAnswerService.deleteAnswersByProblemId(id);
+//        problemAnswerService.deleteAnswersByProblemId(id);
         // 删除
         problemInfoMapper.deleteById(id);
+        //删除附件
     }
 
     private void validateProblemInfoExists(Long id) {

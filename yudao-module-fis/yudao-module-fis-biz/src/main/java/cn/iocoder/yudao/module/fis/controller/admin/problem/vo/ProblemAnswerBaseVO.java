@@ -38,6 +38,9 @@ public class ProblemAnswerBaseVO {
     @NotNull(message = "回答内容不能为空")
     private String answerContent;
 
+    @Schema(description = "回答附件id", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Long answerFileId;
+
     @Schema(description = "回答附件", requiredMode = Schema.RequiredMode.REQUIRED)
     private String answerAttached;
 
