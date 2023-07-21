@@ -118,7 +118,7 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
 
     }
 
-    private void validateProblemInfoExists(Long id) {
+    public void validateProblemInfoExists(Long id) {
         if (problemInfoMapper.selectById(id) == null) {
             throw exception(PROBLEM_INFO_NOT_EXISTS);
         }

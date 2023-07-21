@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.fis.service.problem;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.hutool.core.io.file.FileNameUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemAnswerCreateReqVO;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemAnswerExportReqVO;
@@ -10,6 +9,7 @@ import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.ProblemAnswerUpda
 import cn.iocoder.yudao.module.fis.convert.problem.ProblemAnswerConvert;
 import cn.iocoder.yudao.module.fis.dal.dataobject.problem.ProblemAnswerDO;
 import cn.iocoder.yudao.module.fis.dal.mysql.problem.ProblemAnswerMapper;
+import cn.iocoder.yudao.module.fis.dal.mysql.problem.ProblemInfoMapper;
 import cn.iocoder.yudao.module.infra.api.file.FileApi;
 import cn.iocoder.yudao.module.infra.api.file.dto.FileCreateReqDTO;
 import cn.iocoder.yudao.module.infra.api.file.dto.FileRespDTO;
@@ -41,6 +41,8 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
 
     @Resource
     private ProblemAnswerMapper problemAnswerMapper;
+    @Resource
+    private ProblemInfoMapper problemInfoMapper;
 
 
     @Resource
@@ -54,6 +56,10 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
 
     @Override
     public Long createProblemAnswer(MultipartFile file, ProblemAnswerCreateReqVO createReqVO) {
+        //校验问题是否存在
+        if (problemInfoMapper.selectById(createReqVO.getProblemId()) == null) {
+            throw exception(PROBLEM_INFO_NOT_EXISTS);
+        }
         //用户信息
         AdminUserRespDTO user = systemService.getLoginUser();
         //已回答过的问题更新
@@ -137,6 +143,10 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
 
     @Override
     public PageResult<ProblemAnswerDO> getProblemAnswerPage(ProblemAnswerPageReqVO pageReqVO) {
+        //只查询我的回答
+        //用户信息
+        AdminUserRespDTO user = systemService.getLoginUser();
+        pageReqVO.setAnswerId(user.getUsername());
         return problemAnswerMapper.selectPage(pageReqVO);
     }
 

@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.infra.api.file.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ public class FilePageReqDTO {
     @Schema(description = "文件名称")
     private String name;
 
-    @Schema(description = "创建时间", example = "[2022-07-01 00:00:00, 2022-07-01 23:59:59]")
+    @Schema(description = "创建时间")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime[] createTime;
 }

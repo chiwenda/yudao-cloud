@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.module.fis.enums.ErrorCodeConstants.FILE_NOT_EXISTS;
 import static cn.iocoder.yudao.module.fis.enums.ErrorCodeConstants.SPACE_DIMENSION_NOT_NULL;
 
 
@@ -46,13 +47,11 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public byte[] downloadFromOss(String path) {
         try {
-
             return HttpUtil.downloadBytes(path);
         } catch (Exception e) {
             log.error(e.getMessage());
-
+            return new byte[0];
         }
-        return new byte[0];
     }
 
     @Override

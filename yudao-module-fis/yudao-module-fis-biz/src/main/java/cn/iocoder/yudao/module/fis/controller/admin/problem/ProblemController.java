@@ -22,11 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.error;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.module.fis.enums.ErrorCodeConstants.FILE_DOWNLOAD_ERROR;
+import static cn.iocoder.yudao.module.fis.enums.ErrorCodeConstants.FILE_NOT_EXISTS;
 
 @Tag(name = "管理后台 - 问题")
 @RestController
@@ -67,26 +68,17 @@ public class ProblemController {
     @PreAuthorize("@ss.hasPermission('fis:problem-info:download')")
     @Operation(summary = "下载附件")
     public void download(HttpServletResponse response, @RequestParam("path") String path) {
-        ServletOutputStream outputStream = null;
+        ServletOutputStream outputStream;
         try {
-
             byte[] fileBytes = problemService.downloadFromOss(path);
             outputStream = response.getOutputStream();
             outputStream.write(fileBytes);
             outputStream.close();
             response.setContentType("application/octet-stream;charset=UTF-8");
             response.addHeader("Content-Disposition", "attachment;filename=\"" + FileNameUtil.getName(path) + "\"");
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            if (Objects.nonNull(outputStream)) {
-                try {
-                    outputStream.close();
-                } catch (IOException ex) {
-                    log.error(e.getMessage());
-                    throw exception(FILE_DOWNLOAD_ERROR);
-                }
-            }
+        } catch (IOException e) {
             throw exception(FILE_DOWNLOAD_ERROR);
         }
+
     }
 }

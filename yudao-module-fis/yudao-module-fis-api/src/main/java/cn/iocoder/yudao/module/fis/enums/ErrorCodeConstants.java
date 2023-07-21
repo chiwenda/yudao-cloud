@@ -18,4 +18,5 @@ public interface ErrorCodeConstants {
     ErrorCode PROBLEM_ALREADY_ANSWER = new ErrorCode(1003000005, "问题已回答");
     ErrorCode SPACE_DIMENSION_NOT_NULL = new ErrorCode(1003000006, "空间维度必选");
     ErrorCode FILE_CONTENT_NULL = new ErrorCode(1003000007, "文件内容不能为空");
+    ErrorCode FILE_NOT_EXISTS = new ErrorCode(1003000008, "文件不存在或已被删除");
 }

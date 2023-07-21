@@ -19,8 +19,8 @@ public class ProblemAnswerPageReqVO extends PageParam {
 
     @Schema(description = "问题编号", example = "19519")
     private Long problemId;
-    @Schema(description = "回答人工号", example = "19519")
-    private Long answerId;
+    @Schema(description = "回答人账号", example = "19519")
+    private String answerId;
     @Schema(description = "回答人姓名", example = "张三")
     private String answerName;
 

@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.fis.controller.admin.problem;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.datapermission.core.annotation.DataPermission;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.framework.operatelog.core.annotations.OperateLog;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.*;
@@ -99,6 +100,7 @@ public class ProblemInfoController {
     @GetMapping("/page")
     @Operation(summary = "获得问题信息分页(只显示指派给我的问题)")
     @PreAuthorize("@ss.hasPermission('fis:problem-info:query')")
+    @DataPermission(enable = false)
     public CommonResult<PageResult<ProblemInfoRespVO>> getProblemInfoPage(@Valid ProblemInfoPageReqVO pageVO) {
         PageResult<ProblemInfoDO> pageResult = problemInfoService.getProblemInfoPage(pageVO);
         PageResult<ProblemInfoRespVO> result = ProblemInfoConvert.INSTANCE.convertPage(pageResult);

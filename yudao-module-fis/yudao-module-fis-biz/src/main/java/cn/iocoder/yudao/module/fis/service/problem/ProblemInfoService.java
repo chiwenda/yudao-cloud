@@ -96,4 +96,6 @@ public interface ProblemInfoService {
      * @return 问题
      */
     List<ProblemInfoRespVO> addIsMeAnswer(List<ProblemInfoRespVO> data);
+
+    void validateProblemInfoExists(Long id);
 }
