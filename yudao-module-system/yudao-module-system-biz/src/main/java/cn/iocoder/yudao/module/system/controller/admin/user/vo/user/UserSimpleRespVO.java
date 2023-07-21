@@ -15,6 +15,9 @@ public class UserSimpleRespVO {
     @Schema(description = "用户编号", required = true, example = "1024")
     private Long id;
 
+    @Schema(description = "用户账号", required = true, example = "芋道")
+    private String username;
+
     @Schema(description = "用户昵称", required = true, example = "芋道")
     private String nickname;
 
