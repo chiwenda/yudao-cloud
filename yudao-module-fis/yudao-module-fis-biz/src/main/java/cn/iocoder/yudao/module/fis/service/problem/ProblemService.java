@@ -13,10 +13,10 @@ public interface ProblemService {
     /**
      * 从ftp下载文件
      *
-     * @param path 路径
+     * @param id 文件路径
      * @return 内容
      */
-    byte[] downloadFromOss(String path);
+    byte[] downloadFromOss(Long id);
 
 
     /**

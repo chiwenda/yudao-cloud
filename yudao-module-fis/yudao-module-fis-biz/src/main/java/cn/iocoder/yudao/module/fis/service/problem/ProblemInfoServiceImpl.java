@@ -75,7 +75,7 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
                 FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO()
                         .setName(fileName)
                         .setPath(path).setContent(bytes)).getCheckedData();
-                createReqVO.setProblemAttached(fileResp.getUrl());
+                createReqVO.setProblemAttached(file.getOriginalFilename());
                 createReqVO.setProblemFileId(fileResp.getId());
             } catch (Exception e) {
                 throw exception(FILE_UPLOAD_ERROR, e.getMessage());

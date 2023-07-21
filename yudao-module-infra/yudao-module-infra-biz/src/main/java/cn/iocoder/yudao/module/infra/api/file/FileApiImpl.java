@@ -56,4 +56,10 @@ public class FileApiImpl implements FileApi {
         }
     }
 
+    @Override
+    public CommonResult<FileRespDTO> getFileById(Long id) {
+        FileDO file = fileService.getFileById(id);
+        return success(FileConvert.INSTANCE.convert0(file));
+    }
+
 }

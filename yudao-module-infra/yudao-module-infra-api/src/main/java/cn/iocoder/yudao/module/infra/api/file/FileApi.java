@@ -71,4 +71,8 @@ public interface FileApi {
     @Operation(summary = "删除文件")
     CommonResult<Boolean> delete(@RequestParam("id") Long id);
 
+    @GetMapping(PREFIX + "/get-file-by-id")
+    @Operation(summary = "查询文件")
+    CommonResult<FileRespDTO> getFileById(@RequestParam("id") Long id);
+
 }

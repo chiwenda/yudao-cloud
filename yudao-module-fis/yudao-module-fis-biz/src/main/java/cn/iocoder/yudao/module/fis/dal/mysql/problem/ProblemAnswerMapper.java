@@ -27,6 +27,7 @@ public interface ProblemAnswerMapper extends BaseMapperX<ProblemAnswerDO> {
                 .eqIfPresent(ProblemAnswerDO::getAnswerContent, reqVO.getAnswerContent())
                 .eqIfPresent(ProblemAnswerDO::getAnswerAttached, reqVO.getAnswerAttached())
                 .eqIfPresent(ProblemAnswerDO::getAnswerScore, reqVO.getAnswerScore())
+                .eqIfPresent(ProblemAnswerDO::getCreator, reqVO.getCreator())
                 .betweenIfPresent(ProblemAnswerDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(ProblemAnswerDO::getId));
     }

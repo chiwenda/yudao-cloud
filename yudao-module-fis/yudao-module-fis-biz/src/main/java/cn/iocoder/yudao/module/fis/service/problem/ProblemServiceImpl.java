@@ -45,9 +45,14 @@ public class ProblemServiceImpl implements ProblemService {
 
 
     @Override
-    public byte[] downloadFromOss(String path) {
+    public byte[] downloadFromOss(Long id) {
         try {
-            return HttpUtil.downloadBytes(path);
+            //查询文件是否存在
+            FileRespDTO data = fileApi.getFileById(id).getCheckedData();
+            if (null == data) {
+                return new byte[0];
+            }
+            return HttpUtil.downloadBytes(data.getUrl());
         } catch (Exception e) {
             log.error(e.getMessage());
             return new byte[0];

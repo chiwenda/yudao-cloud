@@ -86,7 +86,7 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
                 FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO()
                         .setName(fileName)
                         .setPath(path).setContent(bytes)).getCheckedData();
-                createReqVO.setAnswerAttached(fileResp.getUrl());
+                createReqVO.setAnswerAttached(file.getOriginalFilename());
                 createReqVO.setAnswerFileId(fileResp.getId());
             } catch (Exception e) {
                 throw exception(FILE_UPLOAD_ERROR, e.getMessage());
@@ -145,8 +145,8 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
     public PageResult<ProblemAnswerDO> getProblemAnswerPage(ProblemAnswerPageReqVO pageReqVO) {
         //只查询我的回答
         //用户信息
-        AdminUserRespDTO user = systemService.getLoginUser();
-        pageReqVO.setAnswerId(user.getUsername());
+        Long userId = systemService.getLoginUser().getId();
+        pageReqVO.setCreator(userId.toString());
         return problemAnswerMapper.selectPage(pageReqVO);
     }
 

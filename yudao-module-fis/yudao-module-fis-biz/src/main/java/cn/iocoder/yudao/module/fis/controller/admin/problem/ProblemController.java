@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.fis.controller.admin.problem;
 
 import cn.hutool.core.io.file.FileNameUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.fis.controller.admin.problem.vo.FilePageReqVO;
@@ -67,15 +68,15 @@ public class ProblemController {
     @GetMapping("/download-attached")
     @PreAuthorize("@ss.hasPermission('fis:problem-info:download')")
     @Operation(summary = "下载附件")
-    public void download(HttpServletResponse response, @RequestParam("path") String path) {
+    public void download(HttpServletResponse response, @RequestParam("id") Long id) {
         ServletOutputStream outputStream;
         try {
-            byte[] fileBytes = problemService.downloadFromOss(path);
+            byte[] fileBytes = problemService.downloadFromOss(id);
             outputStream = response.getOutputStream();
             outputStream.write(fileBytes);
             outputStream.close();
             response.setContentType("application/octet-stream;charset=UTF-8");
-            response.addHeader("Content-Disposition", "attachment;filename=\"" + FileNameUtil.getName(path) + "\"");
+            response.addHeader("Content-Disposition", "attachment;filename=\"" + RandomUtil.randomString(5) + "\"");
         } catch (IOException e) {
             throw exception(FILE_DOWNLOAD_ERROR);
         }

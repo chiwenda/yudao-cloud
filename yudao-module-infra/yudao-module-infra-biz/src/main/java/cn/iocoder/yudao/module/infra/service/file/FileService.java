@@ -55,4 +55,5 @@ public interface FileService {
      */
     byte[] getFileContent(Long configId, String path) throws Exception;
 
+    FileDO getFileById(Long id);
 }
