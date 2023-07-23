@@ -100,7 +100,7 @@ services:
   fis-module-pc-biz:
     container_name: project-module-pc-biz
     build:
-      context: project/modules/pc
+      context: project/modules/fis
       dockerfile: dockerfile
     environment:
       - "SPRING_PROFILES_ACTIVE=prod"

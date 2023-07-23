@@ -1,12 +1,9 @@
 spring:
   application:
     name: gateway-server
-  web:
-    resources:
-      chain:
-        cache: false #静态资源禁用缓存，发布热更包使用
+
   profiles:
-    active: local
+    active: prod
 
 server:
   port: 48080
