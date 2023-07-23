@@ -13,7 +13,7 @@ clean(){
 
 # 启动基础环境（必须）
 base(){
-  docker network create --driver overlay  prod
+  docker network create prod
 	docker-compose up -d project-nacos rmqnamesrv rmqbroker
 }
 
