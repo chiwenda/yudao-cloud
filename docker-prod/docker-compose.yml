@@ -48,7 +48,7 @@ services:
       JAVA_OPTS: "-Drocketmq.namesrv.addr=namesrv:9876"
     depends_on:
       - rmqnamesrv
-  fis-nacos:
+  project-nacos:
     container_name: project-nacos
     image: nacos/nacos-server
     build:
