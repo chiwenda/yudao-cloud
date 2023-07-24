@@ -15,6 +15,13 @@ public class FilePageReqDTO {
     @Schema(description = "文件名称")
     private String name;
 
+    @Schema(description = "标签名称")
+    private String tagName;
+
+    @Schema(description = "标签类型")
+    private Integer tagType;
+
+
     @Schema(description = "创建时间")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime[] createTime;

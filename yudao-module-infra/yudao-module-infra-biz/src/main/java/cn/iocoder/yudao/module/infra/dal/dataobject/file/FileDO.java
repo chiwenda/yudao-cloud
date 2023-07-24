@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.infra.dal.dataobject.file;
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 /**
@@ -51,5 +52,9 @@ public class FileDO extends BaseDO {
      * 文件大小
      */
     private Integer size;
+
+    private Integer tagType;
+
+    private String tagName;
 
 }

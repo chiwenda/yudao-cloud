@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(description =   "FIS后台 - 文件 Response VO,不返回 content 字段，太大" )
+@Schema(description = "FIS后台 - 文件 Response VO,不返回 content 字段，太大")
 @Data
 public class FileRespVO {
 
@@ -26,6 +26,12 @@ public class FileRespVO {
 
     @Schema(description = "文件大小", example = "2048", required = true)
     private Integer size;
+
+    @Schema(description = "标签名称")
+    private String tagName;
+
+    @Schema(description = "标签类型")
+    private Integer tagType;
 
     @Schema(description = "创建时间", required = true)
     private LocalDateTime createTime;

@@ -7,6 +7,7 @@ import cn.iocoder.yudao.framework.common.util.io.FileUtils;
 import cn.iocoder.yudao.framework.file.core.client.FileClient;
 import cn.iocoder.yudao.framework.file.core.utils.FileTypeUtils;
 import cn.iocoder.yudao.module.infra.controller.admin.file.vo.file.FilePageReqVO;
+import cn.iocoder.yudao.module.infra.controller.admin.file.vo.file.FileUploadReqVO;
 import cn.iocoder.yudao.module.infra.dal.dataobject.file.FileDO;
 import cn.iocoder.yudao.module.infra.dal.mysql.file.FileMapper;
 import lombok.SneakyThrows;
@@ -62,6 +63,38 @@ public class FileServiceImpl implements FileService {
         file.setUrl(url);
         file.setType(type);
         file.setSize(content.length);
+        fileMapper.insert(file);
+        return url;
+    }
+
+    @Override
+    @SneakyThrows
+    public String createFile0(FileUploadReqVO reqVO, String name, byte[] content) {
+        // 计算默认的 path 名
+        String type = FileTypeUtils.getMineType(content, name);
+        if (StrUtil.isEmpty(reqVO.getPath())) {
+            reqVO.setPath(FileUtils.generatePath(content, name));
+        }
+        // 如果 name 为空，则使用 path 填充
+        if (StrUtil.isEmpty(name)) {
+            name = reqVO.getPath();
+        }
+
+        // 上传到文件存储器
+        FileClient client = fileConfigService.getMasterFileClient();
+        Assert.notNull(client, "客户端(master) 不能为空");
+        String url = client.upload(content, reqVO.getPath(), type);
+
+        // 保存到数据库
+        FileDO file = new FileDO();
+        file.setConfigId(client.getId());
+        file.setName(name);
+        file.setPath(reqVO.getPath());
+        file.setUrl(url);
+        file.setType(type);
+        file.setSize(content.length);
+        file.setTagName(reqVO.getTagName());
+        file.setTagType(reqVO.getTagType());
         fileMapper.insert(file);
         return url;
     }

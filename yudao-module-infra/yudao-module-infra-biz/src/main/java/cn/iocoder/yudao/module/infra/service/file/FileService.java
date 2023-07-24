@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.infra.service.file;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.infra.controller.admin.file.vo.file.FilePageReqVO;
+import cn.iocoder.yudao.module.infra.controller.admin.file.vo.file.FileUploadReqVO;
 import cn.iocoder.yudao.module.infra.dal.dataobject.file.FileDO;
 
 /**
@@ -28,6 +29,16 @@ public interface FileService {
      * @return 文件路径
      */
     String createFile(String name, String path, byte[] content);
+
+    /**
+     * 保存文件，并返回文件的访问路径
+     *
+     * @param name 原文件名称
+     * @param reqVO 请求参数
+     * @param content 文件内容
+     * @return 文件路径
+     */
+    String createFile0(FileUploadReqVO reqVO,String name, byte[] content);
 
     /**
      * 保存文件，并返回文件的访问路径

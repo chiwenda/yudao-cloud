@@ -20,6 +20,8 @@ public interface FileMapper extends BaseMapperX<FileDO> {
                 .likeIfPresent(FileDO::getPath, reqVO.getPath())
                 .likeIfPresent(FileDO::getName, reqVO.getName())
                 .likeIfPresent(FileDO::getType, reqVO.getType())
+                .likeIfPresent(FileDO::getTagName, reqVO.getTagName())
+                .eqIfPresent(FileDO::getTagType, reqVO.getTagType())
                 .likeIfPresent(FileDO::getCreator, reqVO.getCreator())
                 .betweenIfPresent(FileDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(FileDO::getId));

@@ -23,6 +23,13 @@ public class FilePageReqVO extends PageParam {
     @Schema(description = "文件名称")
     private String name;
 
+    @Schema(description = "标签名称")
+    private String tagName;
+
+    @Schema(description = "标签类型")
+    private Integer tagType;
+
+
     @Schema(description = "创建人")
     private String creator;
 

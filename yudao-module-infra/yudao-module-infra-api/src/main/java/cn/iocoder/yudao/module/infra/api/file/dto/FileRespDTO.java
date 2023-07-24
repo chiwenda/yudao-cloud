@@ -26,6 +26,13 @@ public class FileRespDTO {
     @Schema(description = "文件大小", example = "2048", required = true)
     private Integer size;
 
+    @Schema(description = "标签名称")
+    private String tagName;
+
+    @Schema(description = "标签类型")
+    private Integer tagType;
+
+
     @Schema(description = "创建时间", required = true)
     private LocalDateTime createTime;
 }
