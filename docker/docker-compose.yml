@@ -6,14 +6,14 @@ services:
     ports:
       - 9876:9876
     networks:
-      - fis
+      - prod
     restart: always
     privileged: true
     volumes:
       - /home/docker/rocketmq/server/logs:/home/rocketmq/logs
     environment:
-      - MAX_HEAP_SIZE=256M
-      - HEAP_NEWSIZE=128M
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=256M
     command: [ "sh","mqnamesrv" ]
   rmqbroker:
     image: apache/rocketmq:5.1.3
@@ -23,7 +23,7 @@ services:
       - 10911:10911
       - 10912:10912
     networks:
-      - fis
+      - prod
     restart: always
     privileged: true
     volumes:
@@ -41,14 +41,14 @@ services:
     ports:
       - 8080:8080
     networks:
-      - fis
+      - prod
     restart: always
     privileged: true
     environment:
       JAVA_OPTS: "-Drocketmq.namesrv.addr=namesrv:9876"
     depends_on:
       - rmqnamesrv
-  fis-nacos:
+  project-nacos:
     container_name: project-nacos
     image: nacos/nacos-server
     build:
@@ -65,9 +65,9 @@ services:
     restart: always
     privileged: true
     networks:
-      - fis
-  fis-gateway:
-    container_name: project-gateway
+      - prod
+  yudao-gateway:
+    container_name: yudao-gateway
     build:
       context: project/gateway
       dockerfile: dockerfile
@@ -78,11 +78,11 @@ services:
     restart: always
     privileged: true
     networks:
-      - fis
+      - prod
     depends_on:
-      - fis-nacos
-  fis-module-system-biz:
-    container_name: project-module-system-biz
+      - project-nacos
+  yudao-module-system-biz:
+    container_name: yudao-module-system-biz
     build:
       context: project/modules/system
       dockerfile: dockerfile
@@ -93,12 +93,12 @@ services:
     restart: always
     privileged: true
     networks:
-      - fis
+      - prod
     depends_on:
-      - fis-nacos
+      - project-nacos
       - rmqnamesrv
-  fis-module-pc-biz:
-    container_name: project-module-pc-biz
+  yudao-module-fis-biz:
+    container_name: yudao-module-fis-biz
     build:
       context: project/modules/fis
       dockerfile: dockerfile
@@ -109,12 +109,12 @@ services:
     restart: always
     privileged: true
     networks:
-      - fis
+      - prod
     depends_on:
-      - fis-nacos
+      - project-nacos
       - rmqnamesrv
-  fis-module-infra-biz:
-    container_name: project-module-infra-biz
+  yudao-module-infra-biz:
+    container_name: yudao-module-infra-biz
     build:
       context: project/modules/infra
       dockerfile: dockerfile
@@ -125,11 +125,11 @@ services:
     restart: always
     privileged: true
     networks:
-      - fis
+      - prod
     depends_on:
-      - fis-nacos
+      - project-nacos
       - rmqnamesrv
-      - fis-module-system-biz
+      - yudao-module-system-biz
 networks:
-  fis:
+  prod:
     external: true

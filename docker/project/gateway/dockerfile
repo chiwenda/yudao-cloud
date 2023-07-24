@@ -10,10 +10,10 @@ RUN mkdir -p /home/project
 # 指定路径
 WORKDIR /home/project
 # 复制jar文件到路径
-COPY ./jar/fis-gateway.jar /home/project/yudao-gateway.jar
+COPY ./jar/yudao-gateway.jar /home/project/yudao-gateway.jar
 COPY ./jar/application.yaml /home/project/application.yaml
 COPY ./jar/bootstrap.yaml /home/project/bootstrap.yaml
-COPY ./jar/bootstrap-prod.yaml /home/project/bootstrap-prod.yaml
+COPY jar/bootstrap-prod.yaml /home/project/bootstrap-prod.yaml
 COPY ./jar/logback-spring.xml /home/project/logback-spring.xml
 # 启动网关服务
 ENTRYPOINT ["java","-server","-Xms512m","-Xmx512m","-XX:+HeapDumpOnOutOfMemoryError","-XX:HeapDumpPath=heapError","-jar","yudao-gateway.jar","--spring.profiles.active=prod"]

@@ -43,6 +43,9 @@ spring:
           url: jdbc:mysql://rm-gw0ezyu5e661lxsi6.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
           username: fis_catl
           password: Fis_catl_01
+
+
+
   # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
   redis:
     host: r-gw0peeblti88jli8f0.redis.cn-chengdu.rds.aliyuncs.com # 地址
@@ -57,7 +60,7 @@ spring:
       rocketmq:
         # RocketMQ Binder 配置项，对应 RocketMQBinderConfigurationProperties 类
         binder:
-          name-server: 127.0.0.1:9876 # RocketMQ Namesrv 地址
+          name-server: rmqnamesrv:9876 # RocketMQ Namesrv 地址
       binding-retry-interval: 7200 # 消息绑定重试间隔时间，单位：秒，默认为 30 秒。考虑到本地可能不启动 RocketMQ 服务，设置为 2 小时
 
 --- #################### 定时任务相关配置 ####################
@@ -66,7 +69,7 @@ xxl:
   job:
     enabled: false # 是否开启调度中心，默认为 true 开启
     admin:
-      addresses: http://172.26.37.69:9012/xxl-job-admin/ # 调度中心部署跟地址
+      addresses: http://127.0.0.1:9090/xxl-job-admin # 调度中心部署跟地址
 
 --- #################### 服务保障相关配置 ####################
 
@@ -98,7 +101,7 @@ spring:
 logging:
   level:
     # 配置自己写的 MyBatis Mapper 打印日志
-    com.catl.fis.module.system.dal.mysql: debug
+    cn.iocoder.yudao.module.system.dal.mysql: debug
 
 --- #################### 微信公众号相关配置 ####################
 wx: # 参见 https://github.com/Wechat-Group/WxJava/blob/develop/spring-boot-starters/wx-java-mp-spring-boot-starter/README.md 文档
@@ -115,7 +118,7 @@ wx: # 参见 https://github.com/Wechat-Group/WxJava/blob/develop/spring-boot-sta
 --- #################### 芋道相关配置 ####################
 
 # 芋道配置项，设置当前项目所有自定义的配置
-fis:
+yudao:
   env: # 多环境的配置项
     tag: ${HOSTNAME}
   captcha:
@@ -132,9 +135,9 @@ fis:
     pay-return-url: http://niubi.natapp1.cc/api/pay/order/return
     refund-notify-url: http://niubi.natapp1.cc/api/pay/refund/notify
   access-log: # 访问日志的配置项
-    enable: true
+    enable: false
   error-code: # 错误码相关配置项
-    enable: true
+    enable: false
   demo: false # 关闭演示模式
 
 justauth:

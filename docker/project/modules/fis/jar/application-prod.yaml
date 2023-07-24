@@ -40,31 +40,23 @@ spring:
       primary: master
       datasource:
         master:
-          name: app
-          url: jdbc:mysql://rm-gw0ezyu5e661lxsi6.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
+          name: application
+          url: jdbc:mysql://rm-gw07yn1swe24v63nj.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
           username: fis_catl
           password: Fis_catl_01
         problem:
           name: problem
-          url: jdbc:mysql://rm-gw0ezyu5e661lxsi6.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.problem.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
+          url: jdbc:mysql://rm-gw07yn1swe24v63nj.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.problem.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
           username: fis_catl
           password: Fis_catl_01
+
   # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
   redis:
-    host: r-gw0peeblti88jli8f0.redis.cn-chengdu.rds.aliyuncs.com # 地址
+    host: r-gw06wmmo31ed9b3hh1.redis.cn-chengdu.rds.aliyuncs.com # 地址
     port: 6379 # 端口
     database: 0 # 数据库索引
     password: Fis_catl_01 # 密码，建议生产环境开启
 
---- #################### MQ 消息队列相关配置 ####################
-spring:
-  cloud:
-    stream:
-      rocketmq:
-        # RocketMQ Binder 配置项，对应 RocketMQBinderConfigurationProperties 类
-        binder:
-          name-server: 127.0.0.1:9876 # RocketMQ Namesrv 地址
-      binding-retry-interval: 7200 # 消息绑定重试间隔时间，单位：秒，默认为 30 秒。考虑到本地可能不启动 RocketMQ 服务，设置为 2 小时
 
 --- #################### 定时任务相关配置 ####################
 xxl:
@@ -105,12 +97,12 @@ spring:
 logging:
   level:
     # 配置自己写的 MyBatis Mapper 打印日志
-    com.catl.fis.module.infra.dal.mysql: debug
+    cn.iocoder.yudao.module.fis.dal.mysql: debug
 
 --- #################### 芋道相关配置 ####################
 
 # 芋道配置项，设置当前项目所有自定义的配置
-fis:
+yudao:
   env: # 多环境的配置项
     tag: ${HOSTNAME}
   security:
@@ -118,17 +110,15 @@ fis:
   xss:
     enable: false
     exclude-urls: # 如下两个 url，仅仅是为了演示，去掉配置也没关系
-      - ${spring.boot.admin.context-path}/** # 不处理 Spring Boot Admin 的请求
-      - ${management.endpoints.web.base-path}/** # 不处理 Actuator 的请求
   access-log: # 访问日志的配置项
-    enable: false
+    enable: true
   error-code: # 错误码相关配置项
-    enable: false
+    enable: true
   demo: false # 关闭演示模式
-  oss:
-    store:
-      path:
-        problem:
-          answer: problem/answer
-          issue: problem/issue
-
+  fis:
+    oss:
+      store:
+        path:
+          problem:
+            answer: problem/answer
+            issue: problem/issue

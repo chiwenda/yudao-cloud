@@ -13,12 +13,13 @@ clean(){
 
 # 启动基础环境（必须）
 base(){
-	docker-compose up -d fis-nacos rmqnamesrv rmqbroker
+  docker network create prod
+	docker-compose up -d project-nacos rmqnamesrv rmqbroker
 }
 
 # 启动程序模块（必须）
 modules(){
-	docker-compose up -d fis-gateway fis-module-system-biz fis-module-infra-biz fis-module-pc-biz
+	docker-compose up -d yudao-gateway yudao-module-system-biz yudao-module-infra-biz yudao-module-fis-biz
 }
 
 # 关闭所有环境/模块
