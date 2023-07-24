@@ -97,8 +97,8 @@ services:
     depends_on:
       - project-nacos
       - rmqnamesrv
-  yudao-module-pc-biz:
-    container_name: yudao-module-pc-biz
+  yudao-module-fis-biz:
+    container_name: yudao-module-fis-biz
     build:
       context: project/modules/fis
       dockerfile: dockerfile

@@ -19,7 +19,7 @@ base(){
 
 # 启动程序模块（必须）
 modules(){
-	docker-compose up -d yudao-gateway yudao-module-system-biz yudao-module-infra-biz yudao-module-pc-biz
+	docker-compose up -d yudao-gateway yudao-module-system-biz yudao-module-infra-biz yudao-module-fis-biz
 }
 
 # 关闭所有环境/模块
