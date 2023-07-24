@@ -12,6 +12,7 @@ import cn.iocoder.yudao.module.infra.dal.dataobject.file.FileDO;
 import cn.iocoder.yudao.module.infra.dal.mysql.file.FileMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -67,6 +68,7 @@ public class FileServiceImpl implements FileService {
         return url;
     }
 
+    @Transactional
     @Override
     @SneakyThrows
     public String createFile0(FileUploadReqVO reqVO, String name, byte[] content) {
