@@ -41,18 +41,18 @@ spring:
       datasource:
         master:
           name: application
-          url: jdbc:mysql://rm-gw07yn1swe24v63nj.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
+          url: jdbc:mysql://rm-gw0ezyu5e661lxsi6.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
           username: fis_catl
           password: Fis_catl_01
         problem:
           name: problem
-          url: jdbc:mysql://rm-gw07yn1swe24v63nj.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.problem.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
+          url: jdbc:mysql://rm-gw0ezyu5e661lxsi6.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.problem.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
           username: fis_catl
           password: Fis_catl_01
 
   # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
   redis:
-    host: r-gw06wmmo31ed9b3hh1.redis.cn-chengdu.rds.aliyuncs.com # 地址
+    host: r-gw0peeblti88jli8f0.redis.cn-chengdu.rds.aliyuncs.com # 地址
     port: 6379 # 端口
     database: 0 # 数据库索引
     password: Fis_catl_01 # 密码，建议生产环境开启

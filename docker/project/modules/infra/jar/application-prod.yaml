@@ -41,7 +41,7 @@ spring:
       datasource:
         master:
           name: application
-          url: jdbc:mysql://rm-gw07yn1swe24v63nj.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
+          url: jdbc:mysql://rm-gw0ezyu5e661lxsi6.mysql.cn-chengdu.rds.aliyuncs.com:3306/${spring.datasource.dynamic.datasource.master.name}?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true # MySQL Connector/J 8.X 连接的示例
           username: fis_catl
           password: Fis_catl_01
 
