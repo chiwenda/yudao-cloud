@@ -35,6 +35,7 @@ public class FileApiImpl implements FileApi {
     @Override
     public CommonResult<FileRespDTO> createResp(FileCreateReqDTO createReqDTO) {
         FileDO file = fileService.createFileAndGetId(createReqDTO.getName(), createReqDTO.getPath(),
+                createReqDTO.getTagName(), createReqDTO.getTagType(),
                 createReqDTO.getContent());
         return success(FileConvert.INSTANCE.convert0(file));
     }

@@ -16,6 +16,12 @@ public class FileCreateReqDTO {
     @Schema(description = "文件路径", example = "xxx.png")
     private String path;
 
+    @Schema(description = "标签名")
+    private String tagName;
+
+    @Schema(description = "标签类型")
+    private Integer tagType;
+
     @Schema(description = "文件内容", required = true)
     @NotEmpty(message = "文件内容不能为空")
     private byte[] content;

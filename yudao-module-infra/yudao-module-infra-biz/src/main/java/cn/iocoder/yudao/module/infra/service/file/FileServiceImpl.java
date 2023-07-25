@@ -103,7 +103,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @SneakyThrows
-    public FileDO createFileAndGetId(String name, String path, byte[] content) {
+    public FileDO createFileAndGetId(String name, String path,String tagName,Integer tagType, byte[] content) {
         // 计算默认的 path 名
         String type = FileTypeUtils.getMineType(content, name);
         if (StrUtil.isEmpty(path)) {
@@ -127,6 +127,8 @@ public class FileServiceImpl implements FileService {
         file.setUrl(url);
         file.setType(type);
         file.setSize(content.length);
+        file.setTagName(tagName);
+        file.setTagType(tagType);
         fileMapper.insert(file);
         return file;
     }

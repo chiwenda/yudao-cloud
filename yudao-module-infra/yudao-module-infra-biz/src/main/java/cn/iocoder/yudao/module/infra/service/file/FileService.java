@@ -48,7 +48,7 @@ public interface FileService {
      * @param content 文件内容
      * @return 文件ID
      */
-    FileDO createFileAndGetId(String name, String path, byte[] content);
+    FileDO createFileAndGetId(String name, String path,String tagName,Integer tagType, byte[] content);
 
     /**
      * 删除文件

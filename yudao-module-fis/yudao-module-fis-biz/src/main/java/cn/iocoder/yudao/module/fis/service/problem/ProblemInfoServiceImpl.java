@@ -73,7 +73,7 @@ public class ProblemInfoServiceImpl implements ProblemInfoService {
                         , String.format("%s/%s", this.path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
                         , fileName);
                 FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO()
-                        .setName(fileName)
+                        .setName(fileName).setTagName("问题").setTagType(Integer.valueOf(createReqVO.getProblemType()))
                         .setPath(path).setContent(bytes)).getCheckedData();
                 createReqVO.setProblemAttached(file.getOriginalFilename());
                 createReqVO.setProblemFileId(fileResp.getId());

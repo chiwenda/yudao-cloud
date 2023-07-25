@@ -84,7 +84,7 @@ public class ProblemAnswerServiceImpl implements ProblemAnswerService {
                         , String.format("%s/%s", this.path, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyyMMdd"))
                         , fileName);
                 FileRespDTO fileResp = fileApi.createResp(new FileCreateReqDTO()
-                        .setName(fileName)
+                        .setName(fileName).setTagName("回答")
                         .setPath(path).setContent(bytes)).getCheckedData();
                 createReqVO.setAnswerAttached(file.getOriginalFilename());
                 createReqVO.setAnswerFileId(fileResp.getId());
